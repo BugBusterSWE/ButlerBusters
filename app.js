@@ -67,6 +67,6 @@ recursive( "services", function ( err, files ) {
 	}
 });
 
-app.listen( 80, function() {
-	console.log( "App listening in port 80" );
+app.listen( 8080, function() {
+	console.log( "App listening in port 8080" );
 });
