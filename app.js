@@ -39,7 +39,7 @@ app.use( bodyParser.json() ); // for parsing application/json
 // for parsing application/x-www-form-urlencoded
 app.use( bodyParser.urlencoded( { extended: true } ) ); 
 
-app.set( "port", process.env.PORT );
+app.set( "port", 5000 );
 
 console.log( "Read Teamwork events..." );
 // Read all events managed
