@@ -39,6 +39,8 @@ app.use( bodyParser.json() ); // for parsing application/json
 // for parsing application/x-www-form-urlencoded
 app.use( bodyParser.urlencoded( { extended: true } ) ); 
 
+app.set( "port", process.env.PORT );
+
 console.log( "Read Teamwork events..." );
 // Read all events managed
 recursive( "services", function ( err, files ) {
@@ -67,6 +69,6 @@ recursive( "services", function ( err, files ) {
 	}
 });
 
-app.listen( 5000, function() {
-    console.log( "App listening in port 5000" );
+app.listen( app.get( "port" ), function() {
+    console.log( "App listening in port " + app.get( "port" );
 });
