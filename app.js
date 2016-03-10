@@ -70,5 +70,5 @@ recursive( "services", function ( err, files ) {
 });
 
 app.listen( app.get( "port" ), function() {
-    console.log( "App listening in port " + app.get( "port" );
+    console.log( "App listening in port " + app.get( "port" ) );
 });
