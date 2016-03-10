@@ -67,6 +67,6 @@ recursive( "services", function ( err, files ) {
 	}
 });
 
-app.listen( process.env.PORT, function() {
-	console.log( "App listening in port " + process.env.PORT );
+app.listen( 5000, function() {
+    console.log( "App listening in port 5000" );
 });
