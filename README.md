@@ -10,12 +10,14 @@ communicate with Teamwork and Github. This is model that you must write:
 ```json
 {
 	"users": {
+	"
 		// The pair 'id_teamwork_user': 'username_github', in this way
 		// any event  attached at the Teamwork user will assiociade at a
 		// Github user.
 
 		// For example:
-		// "123456789": "myUser"
+		// 123456789: myUser
+	"
 	},
 
 	"organization": "Name of yours GitHub organization or user",
