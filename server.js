@@ -43,7 +43,9 @@ app.use( bodyParser.json() ); // for parsing application/json
 // for parsing application/x-www-form-urlencoded
 app.use( bodyParser.urlencoded( { extended: true } ) ); 
 
-app.set( "port", ( process.env.PORT || 80 ) );
+// Use OpenShift configuration
+app.set( "port", ( process.env.OPENSHIFT_NODEJS_PORT || 8080 ) );
+app.set( "ip_address", ( process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1' ) );
 
 // Read all events managed
 recursive( "services", function ( err, files ) {
@@ -77,6 +79,6 @@ app.get( "/", function ( req, res ) {
     res.send( "Nothing to do" );
 });
 
-app.listen( app.get( "port" ), function () {
+app.listen( app.get( "port" ), app.get( "ip_address" ), function () {
     console.log( "App listening in port " + app.get( "port" ) );
 });
