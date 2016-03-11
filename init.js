@@ -6,27 +6,28 @@
 const fs = require( "fs" );
 
 fs.mkdir( "config", function ( e ) {
-	if ( !e ) {
-		var config = JSON.parse( fs.readFileSync( "config.json", "utf-8" ) );
+    if ( !e ) {
+	var config = JSON.parse( fs.readFileSync( "config.json", "utf-8" ) );
 
-		fs.writeFile( "config/access.json", JSON.stringify({
-			user: config.user,
-	        	pass: config.pass,
-        		api_key: config.api_key,
-        		teamwork_website: config.teamwork_website	
-		}), "utf-8", function ( e ) {
-			if ( e ) console.log( "Impossibile creare il file access.json" );
-		});
+	fs.writeFile( "config/access.json", JSON.stringify({
+	    user: config.user,
+	    pass: config.pass,
+            api_key: config.api_key,
+            teamwork_website: config.teamwork_website	
+	}), "utf-8", function ( e ) {
+	    if ( e ) console.log( "Impossibile creare il file access.json" );
+	});
 
-		fs.writeFile( "config/repo_info.json", JSON.stringify({
-			users: config.users,
-			organization: config.organization,
-			milestones: {},
-			pending_milestones: {}
-		}), "utf-8", function( e ) {
-			if ( e ) console.log( "Impossibile creare il file repo_info.json" );
-		});
-	} else {
-		console.log( "La configurazione iniziale è già presente" );
-	}
+	fs.writeFile( "config/repo_info.json", JSON.stringify({
+	    users: config.users,
+	    organization: config.organization,
+	    mail_box: config.mail_box,
+	    milestones: {},
+	    pending_milestones: {}
+	}), "utf-8", function( e ) {
+	    if ( e ) console.log( "Impossibile creare il file repo_info.json" );
+	});
+    } else {
+	console.log( "La configurazione iniziale è già presente" );
+    }
 });
