@@ -26,7 +26,6 @@ function getTarget( request ) {
 		- teamwork_website
 */
 function TeamWork( authentication ) {
-	console.log( authentication.api_key + " " + authentication.teamwork_website );
 	apiKey = authentication.api_key;
 	teamworkWebsite = authentication.teamwork_website;
 }
