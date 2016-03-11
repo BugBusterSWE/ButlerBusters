@@ -1,11 +1,11 @@
 {
     "name": "ButlerBusters",
     "description": "A bot to join Teamwork with Github",
-    "main": "app.js",
+    "main": "server.js",
     "version": "1.0.0",
 
     "scripts": {
-	"start": "node app.js"
+	"start": "node init.js && supervisor server.js"
     },
 
     "dependencies": {
