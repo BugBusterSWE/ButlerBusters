@@ -1,12 +1,12 @@
 # ButlerBusters
 
 A bot to join Teamwork with Github.
-If you have a organization and you work with Teamwork this application is for you.
+If you have a organization and you work with Teamwork this application for you.
 
 ## Installation
 
 Download this repo in your server and create **config.json** file. This file storage the main informations need to
-communicate with Teamwork and Github. This is model that you must write:
+communicate with Teamwork and Github. This is model that you must follow:
 ```json
 {
 	"users": {
@@ -27,4 +27,14 @@ communicate with Teamwork and Github. This is model that you must write:
 	"teamwork_website": "Teamwork site web that your organization use",
 	"mail_box": "Id of the Teamwork's messages box to send notification"
 }
+```
+
+You have been creating a correct config.json. To create the correctly environment you must run the init.js with:
+```bash
+node init.js
+```
+
+Success! The application is installed correctly. Now, to run the application is enough do:
+```bash
+node app.js
 ```
