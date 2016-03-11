@@ -10,7 +10,7 @@ var github = new GitHubApi({
 });
 
 // Read configuration file to access at api github
-console.log( "Read access configuration..." );
+console.log( "Read access configurations..." );
 var access_param = JSON.parse( fs.readFileSync( "config/access.json", "utf-8" ) );
 console.log( "Done" );
 
