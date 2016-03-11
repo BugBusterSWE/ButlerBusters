@@ -1,2 +1,2 @@
 node init.js
-supervisor server.js
+node server.js
