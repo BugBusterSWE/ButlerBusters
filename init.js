@@ -23,7 +23,8 @@ fs.mkdir( "config", function ( e ) {
 	    organization: config.organization,
 	    mail_box: config.mail_box,
 	    milestones: {},
-	    pending_milestones: {}
+	    pending_milestones: {},
+	    github_issues: {}
 	}), "utf-8", function( e ) {
 	    if ( e ) console.log( "Impossibile creare il file repo_info.json" );
 	});

@@ -111,7 +111,14 @@ exports.main = function ( req, teamwork, github ) {
 			console.log( "Task/created: create issue on Github" );
 			github.issues.create( issueGithub, function ( err, res ) {
                             // Catch this exception in the below catch body
-                            if ( err ) { throw err; }
+                            if ( err ) {
+				throw err;
+			    } else {
+				// Map id github issue with id teamwork task
+				configRepo["github_issues"][res.id] = info["todo-item"]["id"];
+				// Save in config file
+				fs.writeFileSync( "config/repo_info.json", JSON.stringify( configRepo ), "utf-8" );
+			    }
 			});
                     }).catch( function ( err ) {
 			// Throw err to catch in the catch body
