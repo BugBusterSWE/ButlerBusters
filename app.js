@@ -28,7 +28,6 @@ var express = require( 'express' );
 var bodyParser = require( "body-parser" );
 // Open two service, app to mangare Teamwork request. Second to user request.
 var app = express();
-var front = express();
 
 // Create wrapper TeamWork API
 var TeamWorkApi = require( "./teamwork.js" );
@@ -41,8 +40,7 @@ app.use( bodyParser.json() ); // for parsing application/json
 // for parsing application/x-www-form-urlencoded
 app.use( bodyParser.urlencoded( { extended: true } ) ); 
 
-app.set( "port", 5000 );
-front.set( "port", ( process.env.PORT || 80 ) );
+app.set( "port", ( process.env.PORT || 80 ) );
 
 console.log( "Read Teamwork events..." );
 // Read all events managed
@@ -72,14 +70,10 @@ recursive( "services", function ( err, files ) {
 	}
 });
 
-front.get( "/", function ( req, res ) {
+app.get( "/", function ( req, res ) {
     res.send( "Nothing to do" );
 });
 
-app.listen( app.get( "port" ), function() {
-    console.log( "App listening in port " + app.get( "port" ) );
-});
-
-front.listen( front.get( "port" ), function () {
-    console.log( "Front listening in port " + front.get( "port" ) );
+app.listen( app.get( "port" ), function () {
+    console.log( "Front listening in port " + app.get( "port" ) );
 });
