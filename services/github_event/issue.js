@@ -13,7 +13,7 @@ exports.main = function ( req, teamwork, github ) {
 	// ConfigRepo as same as map, foreach issues there is a task and the id
 	// issue maps to a teamwork task.
 	var configRepo = JSON.stringify(
-	    fs.readSyncFile( "config/repo_info.json", "utf-8" )
+	    fs.readFileSync( "config/repo_info.json", "utf-8" )
 	);
 	
 	var idIssue = payload.issue.id;
