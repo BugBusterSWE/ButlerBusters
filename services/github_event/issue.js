@@ -12,7 +12,7 @@ exports.main = function ( req, teamwork, github ) {
     if ( payload.action === "closed" ) {
 	// ConfigRepo as same as map, foreach issues there is a task and the id
 	// issue maps to a teamwork task.
-	var configRepo = JSON.stringify(
+	var configRepo = JSON.parse(
 	    fs.readFileSync( "config/repo_info.json", "utf-8" )
 	);
 	
@@ -24,6 +24,12 @@ exports.main = function ( req, teamwork, github ) {
 	    if ( !error && resonse.statusCode === 200 ) {
 		// Remove the map between issue Github and task Teamwork
 		delete configRepo["github_issues"][idIssue];
+		// Save new status repo
+		fs.writeFileSync(
+		    "config/repo_info.json",
+		    JSON.stringify( configRepo ),
+		    "utf-8"
+		);
 	    } else {
 		console.log( "Task with id " + idTask + " not is close" );
 	    }
