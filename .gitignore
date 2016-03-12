@@ -6,3 +6,6 @@ docker-compose.yml
 # Important configuration file
 config.json
 config/
+
+# Temporary file emacs
+*.*~
