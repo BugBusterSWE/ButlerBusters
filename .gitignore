@@ -9,3 +9,7 @@ config/
 
 # Temporary file emacs
 *.*~
+
+# OpenShift directory
+
+.openshift/
