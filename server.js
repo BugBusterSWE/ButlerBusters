@@ -1,5 +1,5 @@
 // Capture the substring 'service/grout_event/event'
-const PATH_EVENT = /services(\/\w+\/\w+\/\w+).js$/;
+const PATH_EVENT = /services(\/[\w+\/]+).js$/;
 
 var fs = require( "fs" );
 var GitHubApi = require( "github" );
