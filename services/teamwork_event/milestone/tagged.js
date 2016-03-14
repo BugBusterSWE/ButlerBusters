@@ -21,7 +21,8 @@ exports.main = function ( req, teamwork, github ) {
 	    // Get the milestone incomplete
 	    var pendingMilestone = configRepo["pending_milestones"][idMilestone];
 	    // Get the first ( and only one ) tag.
-	    // Catch the string forwarded the character '$' to discern by other tag and check if was received corret tag.
+	    // Catch the string forwarded the character '$' to discern by other
+	    // tag and check if was received corret tag.
 	    var group = /^\$(\w+)$/.exec( info["milestone"]["tags"][0]["name"] );
 	    
 	    if ( group != null ) {
@@ -65,17 +66,19 @@ exports.main = function ( req, teamwork, github ) {
 		" API di Teamwork hanno riscontrato il seguente errore: " +
 		JSON.stringify( err );
 	}
-    });
 
-    teamwork.sendMessage(
-	configRepo["project"],
-	postMessage,
-	function ( error, response, body ) {
-	    if ( !error && response.statusCode === 201 ) {
-		console.log( "Message sended with success" );
-	    } else {
-		console.log( "Error send messages: " );
-		console.log( JSON.stringify( error ) );
-	    }
+	// Send to message with the abstract of state
+	teamwork.sendMessage(
+	    configRepo["project"],
+	    postMessage,
+	    function ( error, response, body ) {
+		if ( !error && response.statusCode === 201 ) {
+		    console.log( "Message sended with success" );
+		} else {
+		    console.log(
+			"Error send messages, status " + response.statusCode
+		    );
+		}
+	});
     });
 };
