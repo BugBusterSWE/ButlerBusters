@@ -11,6 +11,8 @@ exports.main = function ( req, teamwork, github ) {
         if ( !error && response.statusCode == 200 ) {
             var info = JSON.parse( body );
 
+	    console.log( info );
+	    
             // Read all needed information to create a new issue
             var configRepo = JSON.parse( fs.readFileSync( "config/repo_info.json", "utf-8" ) );
 
@@ -19,7 +21,7 @@ exports.main = function ( req, teamwork, github ) {
                 user: configRepo["organization"],
                 repo: "",
                 title: info["todo-item"]["content"],
-                body: info["todo-item"]["description"],
+                body: info["todo-item"]["description"] + "\n\nLink task: ",
                 assignee: configRepo["users"][info["todo-item"]["responsible-party-id"]],
                 milestone: "",
                 labels: []
