@@ -91,6 +91,22 @@ TeamWork.prototype.closeTask = function( id, callback ) {
     request( getTarget( "tasks/"+id+"/complete", "PUT" ), callback );
 };
 
+/**
+   Send message at the project with the id passed as argument.
+   @param projectId {number} - Id project
+   @param post {Object} - Object with parameters needed to send message
+   @param callback {function}
+   Function to call when the request is finished with below parameters:
+   + error {Object} - Information error
+   + response {Object} - Object to rappresent the payload sended from receiver
+   + body {Object} - result data
+*/
+TeamWork.prototype.sendMessage = function ( projectId, post, callback ) {
+    request(
+	getTarget( "projects/"+projectId+"/posts", "POST", { post: post } ),
+	callback
+    );
+};
 
 
 module.exports = TeamWork;
