@@ -22,6 +22,7 @@ fs.mkdir( "config", function ( e ) {
 	    users: config.users,
 	    organization: config.organization,
 	    mail_box: config.mail_box,
+	    project: config.project,
 	    milestones: {},
 	    pending_milestones: {},
 	    github_issues: {}
