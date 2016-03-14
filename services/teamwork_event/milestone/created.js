@@ -6,6 +6,8 @@ exports.main = function ( req, teamwork, github ) {
     console.log( "Milestone created event occurred" );
     var idMilestone = req.body.objectId;
 
+    var configRepo = JSON.parse( fs.readFileSync( "config/repo_info.json", "utf-8" ) );
+    
     var postMessage = {
 	"category-id": configRepo["mail_box"],
 	"notify": [""],
@@ -18,7 +20,6 @@ exports.main = function ( req, teamwork, github ) {
     // Get information of the milestone created
     teamwork.retrieveMilestone( idMilestone, function ( err, response, body ) {
 	var info = JSON.parse( body );
-	var configRepo = JSON.parse( fs.readFileSync( "config/repo_info.json", "utf-8" ) );
 
 	console.log( "Milestone/created: building milestone..." );
 	// Push the new incomplete milestones to create new one when an repo tag will attach to the milestone.
