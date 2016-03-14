@@ -127,6 +127,8 @@ exports.main = function ( req, teamwork, github ) {
 				}).catch( function ( err ) {
 				    reject( err );
 				}); 
+			}).catch( function( err ) {
+			    fulfill();
 			});
 
 			// Get all labels setted in the task
