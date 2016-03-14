@@ -15,13 +15,16 @@ exports.main = function ( req, teamwork, github ) {
 	    
             // Read all needed information to create a new issue
             var configRepo = JSON.parse( fs.readFileSync( "config/repo_info.json", "utf-8" ) );
+	    var access = JSON.parse( fs.readFileSync( "config/access.json", "utf-8" ) );
 
+	    var linkTask = "https://"+access.teamwork_website+"/tasks/"+info["todo-item"]["id"];
+	    
             // Message to send at github for create a new issue
             var issueGithub = {
                 user: configRepo["organization"],
                 repo: "",
                 title: info["todo-item"]["content"],
-                body: info["todo-item"]["description"] + "\n\nLink task: ",
+                body: info["todo-item"]["description"] + "\n\nLink task: ["+linkTask+"]("+linkTask+")",
                 assignee: configRepo["users"][info["todo-item"]["responsible-party-id"]],
                 milestone: "",
                 labels: []
