@@ -6,6 +6,15 @@ exports.main = function ( req, teamwork, github ) {
     console.log( "Milestone created event occurred" );
     var idMilestone = req.body.objectId;
 
+    var postMessage = {
+	"category-id": configRepo["mail_box"],
+	"notify": [""],
+	"private": 0,
+	"attachments": "",
+	"pendingFileAttachments": "",
+	"tags": ""
+    };
+    
     // Get information of the milestone created
     teamwork.retrieveMilestone( idMilestone, function ( err, response, body ) {
 	var info = JSON.parse( body );
@@ -28,18 +37,15 @@ exports.main = function ( req, teamwork, github ) {
 	console.log( "Milestone/created: save milestone..." );
 	// Save pending milestone
 	fs.writeFileSync( "config/repo_info.json", JSON.stringify( configRepo ), "utf-8" );
+	// Send positive result
+	postMessage.title = "Milestone creata con successo";
+	postMessage.body =
+	    "La milestone " + info["milestone"]["title"] +
+	    " e' stata creta con successo e in attesa di essere taggata";
+
 	teamwork.sendMessage(
 	    configRepo["project"],
-	    {
-		"title": "Mailstone create con successo",
-		"category-id": configRepo["mail_box"],
-		"notify": [""],
-		"private": 0,
-		"body": "Per il momento solo un testo breve",
-		"attachments": "",
-		"pendingFileAttachments": "",
-		"tags": ""
-	    },
+	    postMessage,
 	    function ( error, response, body ) {
 		if ( !error && response.statusCode === 201 ) {
 		    console.log( "Message sended with success" );
