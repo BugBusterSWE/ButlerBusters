@@ -74,7 +74,8 @@ exports.main = function ( req, teamwork, github ) {
 	    if ( !error && response.statusCode === 201 ) {
 		console.log( "Message sended with success" );
 	    } else {
-		console.log( "Error send messages" );
+		console.log( "Error send messages: " );
+		console.log( JSON.stringify( error ) );
 	    }
     });
 };
