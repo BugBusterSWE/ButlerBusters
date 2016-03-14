@@ -21,7 +21,7 @@ exports.main = function ( req, teamwork, github ) {
 	var idTask = configRepo["github_issues"][idIssue];
 	
 	teamwork.closeTask( idTask, function ( error, response, body ) {
-	    if ( !error && resonse.statusCode === 200 ) {
+	    if ( !error && response.statusCode === 200 ) {
 		// Remove the map between issue Github and task Teamwork
 		delete configRepo["github_issues"][idIssue];
 		// Save new status repo
