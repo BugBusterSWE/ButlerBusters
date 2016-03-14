@@ -46,13 +46,12 @@ exports.main = function ( req, teamwork, github ) {
 			    fs.writeFileSync( "config/repo_info.json", JSON.stringify( configRepo ), "utf-8" );
 
 			    postMessage.title =
-				"Milestone create nel repo " +
+				"Milestone creata nel repo " +
 				repo;
 			    postMessage.body =
 				"La milestone pendente e' stata " +
-				"create con successo";
+				"creata con successo";
 
-			    console.log( "Finish" );
 			    // Complete with success
 			    fulfill();
 			}
@@ -70,7 +69,7 @@ exports.main = function ( req, teamwork, github ) {
 		postMessage.title =
 		    "Impossibile ottenere l'id della milestone" +
 		    "taggata";
-		postMessage.body = "La milestone non puo' essere create perche' le" +
+		postMessage.body = "La milestone non puo' essere creata perche' le" +
 		    " API di Teamwork hanno riscontrato il seguente errore: " +
 		    JSON.stringify( err );
 
@@ -81,7 +80,6 @@ exports.main = function ( req, teamwork, github ) {
 
     // Finish to elaborate promise
     createMilestone.then( function () {
-	console.log( "Send message" );
 	// Send to message with the abstract of state
 	teamwork.sendMessage(
 	    configRepo["project"],
