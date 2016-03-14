@@ -1,16 +1,23 @@
 const fs = require( "fs" );
 
 exports.main = function ( req, teamwork, github ) {
-    console.log( "==================================================" );
-    console.log( "Milestone tagged event occurred" );
     var idMilestone = req.body.objectId;
+
+    var configRepo = JSON.parse( fs.readFileSync( "config/repo_info.json", "utf-8" ) );
+    
+    var postMessage = {
+	"category-id": configRepo["mail_box"],
+	"notify": [""],
+	"private": 0,
+	"attachments": "",
+	"pendingFileAttachments": "",
+	"tags": ""
+    };
     
     // Retrive the milestone with attacched the repo tag
     teamwork.retrieveMilestone( idMilestone, function ( err, response, body ) {
 	if ( !err && response.statusCode === 200 ) {
 	    var info = JSON.parse( body );
-	    var configRepo = JSON.parse( fs.readFileSync( "config/repo_info.json", "utf-8" ) );
-
 	    // Get the milestone incomplete
 	    var pendingMilestone = configRepo["pending_milestones"][idMilestone];
 	    // Get the first ( and only one ) tag.
@@ -21,12 +28,9 @@ exports.main = function ( req, teamwork, github ) {
 		// Extract name of repo
 		var repo = group[1];
 		pendingMilestone["repo"] = repo;
-		console.log( "Milestone/tagged: save milestone on Github..." );
 		github.issues.createMilestone( pendingMilestone, function( err, res ) {
 		    // Create milesone with success
 		    if ( !err ) {
-			console.log( "Milestone/tagged: done" );
-			console.log( "Milestone/tagged: building configurazion milestone..." );
 			// Move the pending milestone in section milestone save only repo and 
 			// GitHub number
 			configRepo["milestones"][idMilestone] = {
@@ -34,23 +38,43 @@ exports.main = function ( req, teamwork, github ) {
 			    number: res.number
 			};
 
-			console.log( "Milestone/tagged: done" );
-			console.log( "Milestone/tagged: configuration milestone" );
-			console.log( configRepo["milestones"][idMilestone] );
 			// Remove pending milestone 
 			delete configRepo["pending_milestones"][idMilestone];
-			console.log( "Milestone/tagged: removed pending milestone" );
-			console.log( "Milestone/tagged: save milestone..." );
 			fs.writeFileSync( "config/repo_info.json", JSON.stringify( configRepo ), "utf-8" );
-			console.log( "Milestone/tagged: done" );
+
+			postMessage.title =
+			    "Milestone create nel repo " +
+			    repo;
+			postMessage.body =
+			    "La milestone pendente e' stata " +
+			    "create con successo";
 		    }
 		});
-	    } else { 
-		console.log( "Incorrect tag " + info["milestone"]["tags"][0]["name"] );
+	    } else {
+		postMessage.title = "Tag milestone errata";
+		postMessage.body =
+		    "Il seguente tag " +
+		    info["milestone"]["tags"][0]["name"] + " e' invalido." +
+		    " La milestone non potra essere creata.";
 	    }
 	} else {
-	    console.log( "Milestone/tagged: error tag milestone" );
+	    postMessage.title =
+		"Impossibile ottenere l'id della milestone" +
+		"taggata";
+	    postMessage.body = "La milestone non puo' essere create perche' le" +
+		" API di Teamwork hanno riscontrato il seguente errore: " +
+		JSON.stringify( err );
 	}
-	console.log( "==================================================" );
+    });
+
+    teamwork.sendMessage(
+	configRepo["project"],
+	postMessage,
+	function ( error, response, body ) {
+	    if ( !error && response.statusCode === 201 ) {
+		console.log( "Message sended with success" );
+	    } else {
+		console.log( "Error send messages" );
+	    }
     });
 };
