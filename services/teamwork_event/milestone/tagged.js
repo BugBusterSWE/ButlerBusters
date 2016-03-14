@@ -1,5 +1,5 @@
 const fs = require( "fs" );
-const Promise = require( "Promise" );
+const Promise = require( "promise" );
 
 exports.main = function ( req, teamwork, github ) {
     var idMilestone = req.body.objectId;
