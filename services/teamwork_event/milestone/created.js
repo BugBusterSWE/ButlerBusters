@@ -28,6 +28,25 @@ exports.main = function ( req, teamwork, github ) {
 	console.log( "Milestone/created: save milestone..." );
 	// Save pending milestone
 	fs.writeFileSync( "config/repo_info.json", JSON.stringify( configRepo ), "utf-8" );
+	teamwork.sendMessage(
+	    configRepo["project"],
+	    {
+		"title": "Mailstone create con successo",
+		"category-id": configRepo["mail_box"],
+		"notify": [""],
+		"private": 0,
+		"body": "Per il momento solo un testo breve",
+		"attachments": "",
+		"pendingFileAttachments": "",
+		"tags": ""
+	    },
+	    function ( error, response, body ) {
+		if ( !error && response.statusCode === 201 ) {
+		    console.log( "Message sended with success" );
+		} else {
+		    console.log( "Error send messages" );
+		}
+	});
 	console.log( "Milestone/created: done" );
 	console.log( "==================================================" );
     });	
