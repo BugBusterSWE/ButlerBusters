@@ -1,0 +1,16 @@
+{
+    "body": {
+        "action": "assigned",
+        "pull_request": {
+            "number": 3,
+            "user": {
+                "login": "korut94"
+            },
+            "head": {
+                "repo": {
+                    "name": "LinQedin"
+                }
+            }
+        }
+    }
+}
