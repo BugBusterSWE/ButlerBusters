@@ -117,7 +117,7 @@ exports.main = function ( req, teamwork, github )
     ),"utf-8");
 
     github.issues.edit({
-        "user": "ButlerBusters",
+        "user": "BugBusterSWE",
         "repo": pullRequest.head.repo.name,
         "number": pullRequest.number,
         "assignee": assignee
