@@ -59,11 +59,11 @@ function removePull(members, pullReq) {
 }
 
 
-exports.main = function ( req, teamwork, github ) 
+exports.main = function ( req, teamwork, github ) {
     var payload = req.body;
     var pullRequest = payload.pull_request;
     
-    var counter = JSON.parse(fs.readFileSync("service/github_event/counter.json","utf-8"));
+    var counter = JSON.parse(fs.readFileSync("counter.json","utf-8"));
     var assignee = 0;
     
     if (payload.action === "opened") {
@@ -110,7 +110,7 @@ exports.main = function ( req, teamwork, github )
         member.pull.push(identify);    
     }
     
-    fs.writeFileSync("service/github_event/counter.json",JSON.stringify(
+    fs.writeFileSync("counter.json",JSON.stringify(
         counter,
         null,
         "\t"
