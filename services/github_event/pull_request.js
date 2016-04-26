@@ -59,7 +59,7 @@ function removePull(members, pullReq) {
 }
 
 
-exports.main = function ( req, teamwork, github ) {
+exports.main = function ( req, teamwork, github ) { 
     var payload = req.body;
     var pullRequest = payload.pull_request;
     
@@ -75,26 +75,37 @@ exports.main = function ( req, teamwork, github ) {
         
         for (var i = 0; i < length; i++) {       
             selected = counter[keys[i]];
-            
+
             if (
-                pullRequest.user.login !== keys[i] && 
-                selected.count < minPull
+                pullRequest.user.login !== keys[i] &&
+	        selected.count < minPull
             ) {
                 pos = i;
                 minPull = selected.count;
             }
         }
-        
-        assignee = keys[pos]; 
 
+	assignee = keys[pos];
+        
         var member = counter[assignee];
         member.count++;
         member.pull.push({
             "number": pullRequest.number,
             "repo": pullRequest.head.repo.name
         }); 
+
+	github.issues.edit({
+        	"user": "BugBusterSWE",
+        	"repo": pullRequest.head.repo.name,
+        	"number": pullRequest.number,
+        	"assignee": assignee
+   	 }, function(err, res) {
+	 });
+
            
-    } else if (payload.action === "assigned") {
+    }/* else if (payload.action === "assigned") {
+	console.log( "assigned" );
+
         var identify = {
             "number": pullRequest.number,
             "repo": pullRequest.head.repo.name
@@ -108,20 +119,12 @@ exports.main = function ( req, teamwork, github ) {
         
         member.count++;
         member.pull.push(identify);    
-    }
+    }*/
     
     fs.writeFileSync("counter.json",JSON.stringify(
         counter,
         null,
         "\t"
     ),"utf-8");
-
-    github.issues.edit({
-        "user": "BugBusterSWE",
-        "repo": pullRequest.head.repo.name,
-        "number": pullRequest.number,
-        "assignee": assignee
-    }, function(err, res) {
-    });
 } 
 
